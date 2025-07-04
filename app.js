@@ -6,6 +6,14 @@ let tentativas = 1;
 function exibirTextoNaTela(tag, texto) {
     let campo = document.querySelector(tag);
     campo.innerHTML = texto;
+    if ('speechSynthesis' in window) {
+        let utterance = new SpeechSynthesisUtterance(texto);
+        utterance.lang = 'pt-BR';
+        utterance.rate = 1.2;
+        window.speechSynthesis.speak(utterance);
+    } else {
+        console.log("Web Speech API não suportada neste navegador.");
+    }
 }
 
 function exibirMensagemInicial() {
@@ -29,7 +37,7 @@ function verificarChute() {
             exibirTextoNaTela('p', 'Você errou é menor');
         } else {
             exibirTextoNaTela('p', 'Você errou é maior');
-        }   
+        }
     }
     tentativas++;
     limparCampo();
@@ -42,7 +50,7 @@ function gerarNumeroAleatorio() {
     if (quantidadeDeElementosNaLista == numeroLimite) {
         listaDeNumerosSorteados = [];
     }
-    if (listaDeNumerosSorteados.includes(numeroEscolhido)){
+    if (listaDeNumerosSorteados.includes(numeroEscolhido)) {
         return gerarNumeroAleatorio();
     } else {
         listaDeNumerosSorteados.push(numeroEscolhido);
